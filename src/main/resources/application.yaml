@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    starships:
+      url: jdbc:mysql://${STARSHIPS_HOST:localhost}:${STARSHIPS_PORT:3306}/${STARSHIPS_DB:starfleet_db}?allowPublicKeyRetrieval=true&useSSL=false
+      username: ${STARSHIPS_USER}
+      password: ${STARSHIPS_PSWRD}
+      driverClassName: com.mysql.cj.jdbc.Driver
+    vessels:
+      url: jdbc:postgresql://${VESSELS_HOST:localhost}:${VESSELS_PORT:5432}/${VESSELS_DB:federation_db}
+      username: ${VESSELS_USER}
+      password: ${VESSELS_PSWRD}
+      driverClassName: org.postgresql.Driver

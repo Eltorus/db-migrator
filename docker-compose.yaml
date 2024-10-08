@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    build:
+      context: .
+      dockerfile: mysql-init/Dockerfile.mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pswrd
+      MYSQL_DATABASE: starfleet_db
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  postgres-db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pswrd
+      POSTGRES_DB: federation_db
+    volumes:
+      - ./postgres-init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  db-migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      STARSHIPS_HOST: mysql-db
+      STARSHIPS_PORT: 3306
+      STARSHIPS_DB: starfleet_db
+      STARSHIPS_USER: root
+      STARSHIPS_PSWRD: pswrd
+      VESSELS_HOST: postgres-db
+      VESSELS_PORT: 5432
+      VESSELS_DB: federation_db
+      VESSELS_USER: postgres
+      VESSELS_PSWRD: pswrd
+    depends_on:
+      - mysql-db
+      - postgres-db
