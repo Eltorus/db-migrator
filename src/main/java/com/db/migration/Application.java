@@ -18,10 +18,13 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
+
+    /**
+     * Application starts to migrate entities right after start and then ends.
+     * @return CommandLineRunner, which is executed after application context starts
+     */
     @Bean
     public CommandLineRunner run() {
-        return args -> {
-            dbMigrationService.migrateEntities();
-        };
+        return args -> dbMigrationService.performMigration();
     }
 }

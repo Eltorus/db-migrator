@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
+/**
+ * Configure Data Sources for multiple databases
+ */
 @Configuration
 public class DataSourceConfiguration {
 
@@ -26,7 +29,6 @@ public class DataSourceConfiguration {
 
     @Bean
     public DataSource starshipsDataSource(@Qualifier("starshipsDataSourceProperties") DataSourceProperties dataSourceProperties) {
-        System.out.println(dataSourceProperties);
         return dataSourceProperties
                 .initializeDataSourceBuilder()
                 .build();
@@ -34,7 +36,6 @@ public class DataSourceConfiguration {
 
     @Bean
     public DataSource vesselsDataSource(@Qualifier("vesselsDataSourceProperties") DataSourceProperties dataSourceProperties) {
-        System.out.println(dataSourceProperties);
         return dataSourceProperties
                 .initializeDataSourceBuilder()
                 .build();
