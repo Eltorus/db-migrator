@@ -1,18 +1,20 @@
 # db-migrator
 Application that provides Data Migration between MySQL and PostgreSQL using Docker and Java
 
-### Setup instructions: 
-1. Prerequisites: installed Java 17, Docker, Maven
-2. Build application using `mvn clean package`
-3. Run databases using `docker-compose up -d mysql-db postgres-db`. This will run databases and containers and creates needed tables and data in table.
-4. Verify that MySQL DB is present and there's table starfleet_db.starships which is filled with data from [starships.json](mysql-init/starships.json).
-5. Verify that PostgreSQL DB is present and federation_db.vessels table is created.
+### Prerequisites: 
+Installed Java 17, Docker, Maven
+
+### Setup instructions:
+1. Run databases using `docker-compose up -d mysql-db postgres-db`. This will run databases and containers and creates needed tables and data in table.
+2. Verify that MySQL DB is present and there's table starfleet_db.starships which is filled with data from [starships.json](mysql-init/starships.json).
+3. Verify that PostgreSQL DB is present and federation_db.vessels table is created.
 
 ### Running the application
-1. Run db-migrator using `docker-compose up db-migrator`. It will transfer records from MySQL to PostgreSQL.
-2. Wait for db-migrator container to stop. 
-3. After that check logs of the container, it should contain "Migration finished successfully" in case of successful migration.
-4. Verify that PostgreSQL federation_db.vessels table is filled with migrated data.
+1. Build application using `mvn clean package`
+2. Run db-migrator using `docker-compose up db-migrator`. It will transfer records from MySQL to PostgreSQL.
+3. Wait for db-migrator container to stop. 
+4. After that check logs of the container, it should contain "Migration finished successfully" in case of successful migration.
+5. Verify that PostgreSQL federation_db.vessels table is filled with migrated data.
 
 ### Assumptions and Decisions:
 - Some records may fail to transfer. Since, there's no good backoff way to fix that during migration, we need to log error and log ids that were failed to transfer
